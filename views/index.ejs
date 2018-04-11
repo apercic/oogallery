@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title>Gallery</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-file-upload/2.5.0/angular-file-upload.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/javascripts/angularApp.js"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.0.4/ng-file-upload-shim.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.0.4/ng-file-upload.js"></script>
+
+
+  </head>
+  
+  <body ng-app="studis" style="background-color:powderblue;">
+    <ui-view></ui-view>
+
+
+    <!--home.html -->
+    <script type="text/ng-template" id="/home.html">
+      <div class="text-center">
+        <h1>Gallery</h1>
+      </div><br><br>
+
+
+      <div ng-show="vpisanStudent">
+        <h3>Pozdravljen {{trenutni_uporabnik}}</h3>
+        <h3>Tvoj id je: {{id_trenutnega_uporabnika}}</h3>
+        <button class="btn" ng-click=logoutFunkcija()>logout</button>
+        <br><br><br>
+        <div>
+          <img src="1.jpeg" alt="rozica">
+          <img ng-src="{{firstUpl}}">
+          <img ng-src="2.jpg">
+        </div>
+
+        <div slide images='images'></div>
+
+        <br><br>
+
+        <form method="post" enctype="multipart/form-data" action="/profile">        
+          <input type="text" name="title" placeholder="title"/>        
+          <input type="file" name="upl"/>
+          <input type="submit"/>
+        </form>
+
+
+        
+      </div>
+
+      <div ng-hide="vpisanStudent"><!--login/logout, trenutni uporabnik podatki z jwt zetoni-->
+        <div class="panel panel-primary" style="height: 40vh; width: 50vw; margin:0 auto; padding-top: 8vh;">
+          <div class="form-group">
+            <input type="text" class="form-control" ng-model="elektronska_posta" placeholder="uporabniško ime">
+          </div>
+          <div class="form-group">
+            <input ng-model="geslo" placeholder="geslo" type="password" class="form-control">
+          </div>
+          <button class="btn btn-success btn-block" ng-click="login_funkcija()">LOGIN</button><br><br>
+
+          <div ng-show="pokazi_napako_login" class="alert alert-danger">
+            <p ng-bind="login_status"></p>
+          </div>
+        </div>
+
+      </div> <!--login/logout, trenutni uporabnik podatki z jwt zetoni-->
+
+      <!--<hr>
+      <div ng-show="vpisanStudent">
+        <h3>Seznam študentov v bazi:</h3>
+        
+        <table>
+          <tr ng-repeat="student in studenti">
+            <td style="padding-right:20px;">{{student.ime}}   </td>
+            <td style="padding-right:20px;">{{student.vpisnaSt}}</td>
+            <td><button class="btn btn-danger" ng-click="zbrisiStudenta(student, $index)">zbrisi</button></td>
+          </tr>
+        </table>
+        <p ng-bind="statusBrisanje"></p><br>
+
+        <hr>
+        <h4>Dodaj novega študenta v bazo:</h4>
+        <form2>
+          <input class="form-control" ng-model="imeNovega" placeholder="ime" required></input>
+          <input class="form-control" ng-model="priimekNovega" placeholder="priimek" required></input>
+          <input class="form-control" ng-model="vpisnaNovega" placeholder="vpisna številka" required></input>
+          <button class="btn btn-success" ng-click="dodajStudenta()">Dodaj študenta</button><br>
+          <p ng-bind="statusDodajanje"></p>
+        </form2>
+
+
+
+        <hr><br>
+        <h3>Poišči študenta glede na vpisno številko:</h3>
+        <input class="form-control" ng-model="vpisnaIsci" placeholder="vpisna iskanega studenta" required></input><br>
+        <button class="btn btn-info" ng-click="isciPoVpisni()">išči</button>
+        <p>{{najdenoIme}} {{najdenoPriimek}} {{najdenoVpisna}}</p>
+        <button ng-show="najdenPoVpisni" ng-click="izvoziVpisna()">izvozi</button>
+      </div> -->
+    </script>
+    <!--home.html -->
+
+
+    <script type="text/ng-template" id="/slide.html">
+      <div class="slider">
+      <div class="slide" ng-repeat="image in images" ng-show="image.visible">
+        <img ng-src="{{image.src}}" ng-if="image.type == 'image'"/>
+        <video ng-if="image.type=='video'" autobuffer controls>
+          <source ng-src="{{image.src|trusted}}" type="video/mp4">
+        </video>
+      </div>
+      <div class="arrows">
+        <button ng-click="prev()">
+          prev
+        </button>
+        <button ng-click="next()">
+          next
+        </button>
+      </div>
+    </div>
+    </script>
+    
+  </body>
+</html>
