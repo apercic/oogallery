@@ -19,28 +19,39 @@
   </head>
   
   <body ng-app="studis" style="background-color:powderblue;">
+    
+
     <ui-view></ui-view>
 
 
     <!--home.html -->
     <script type="text/ng-template" id="/home.html">
-      <div class="text-center">
-        <h1>Gallery</h1>
-      </div><br><br>
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand">Galerija</a>
+          </div>
+          <ul ng-show="vpisanStudent" class="nav navbar-nav">
+            <li class="active"><a href="#!/home">Home</a></li>
+            <li><a>pozdravljen/a: {{trenutni_uporabnik}}</a></li>
+            <li><a ng-click="logoutFunkcija()">logout</a></li>
+          </ul>
+        </div>
+      </nav>
+
 
 
       <div ng-show="vpisanStudent">
-        <h3>Pozdravljen {{trenutni_uporabnik}}</h3>
-        <h3>Tvoj id je: {{id_trenutnega_uporabnika}}</h3>
-        <button class="btn" ng-click=logoutFunkcija()>logout</button>
+        <h3 align="center">MOJA PRVA GALERIJA</h3>
         <br><br><br>
         <div>
-          <img src="1.jpeg" alt="rozica">
-          <img ng-src="{{firstUpl}}">
-          <img ng-src="2.jpg">
+          <!--<img src="1.jpeg" alt="rozica">
+          <IMG ng-src="{{firstUpl}}"/>
+          <IMG src="2.jpg"></IMG>-->
         </div>
 
         <div slide images='images'></div>
+
 
         <br><br>
 
@@ -68,62 +79,34 @@
             <p ng-bind="login_status"></p>
           </div>
         </div>
-
-      </div> <!--login/logout, trenutni uporabnik podatki z jwt zetoni-->
-
-      <!--<hr>
-      <div ng-show="vpisanStudent">
-        <h3>Seznam študentov v bazi:</h3>
-        
-        <table>
-          <tr ng-repeat="student in studenti">
-            <td style="padding-right:20px;">{{student.ime}}   </td>
-            <td style="padding-right:20px;">{{student.vpisnaSt}}</td>
-            <td><button class="btn btn-danger" ng-click="zbrisiStudenta(student, $index)">zbrisi</button></td>
-          </tr>
-        </table>
-        <p ng-bind="statusBrisanje"></p><br>
-
-        <hr>
-        <h4>Dodaj novega študenta v bazo:</h4>
-        <form2>
-          <input class="form-control" ng-model="imeNovega" placeholder="ime" required></input>
-          <input class="form-control" ng-model="priimekNovega" placeholder="priimek" required></input>
-          <input class="form-control" ng-model="vpisnaNovega" placeholder="vpisna številka" required></input>
-          <button class="btn btn-success" ng-click="dodajStudenta()">Dodaj študenta</button><br>
-          <p ng-bind="statusDodajanje"></p>
-        </form2>
-
-
-
-        <hr><br>
-        <h3>Poišči študenta glede na vpisno številko:</h3>
-        <input class="form-control" ng-model="vpisnaIsci" placeholder="vpisna iskanega studenta" required></input><br>
-        <button class="btn btn-info" ng-click="isciPoVpisni()">išči</button>
-        <p>{{najdenoIme}} {{najdenoPriimek}} {{najdenoVpisna}}</p>
-        <button ng-show="najdenPoVpisni" ng-click="izvoziVpisna()">izvozi</button>
-      </div> -->
+      </div>      
     </script>
     <!--home.html -->
 
 
     <script type="text/ng-template" id="/slide.html">
       <div class="slider">
-      <div class="slide" ng-repeat="image in images" ng-show="image.visible">
-        <img ng-src="{{image.src}}" ng-if="image.type == 'image'"/>
-        <video ng-if="image.type=='video'" autobuffer controls>
-          <source ng-src="{{image.src|trusted}}" type="video/mp4">
-        </video>
+      
+      <div class="row">
+        <div class="col-sm-6"><button ng-click="prev()" class="btn btn-success btn-block"><-</button></div>
+        <div class="col-sm-6"><button ng-click="next()" class="btn btn-success btn-block">-></button></div>
       </div>
-      <div class="arrows">
-        <button ng-click="prev()">
-          prev
-        </button>
-        <button ng-click="next()">
-          next
-        </button>
+
+       <div class="row">         
+
+          <div style="text-align: center" class="slide col-md-12" ng-repeat="image in images" ng-show="image.visible">
+            <img  ng-src="{{image.src}}" ng-if="image.type == 'image'"/>
+            <p align="middle">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+          </div>
+        
       </div>
+
+
+        
+        
     </div>
+
+
     </script>
     
   </body>

@@ -7,24 +7,33 @@ var fs = require('fs');
 var multer = require('multer'),
 bodyParser = require('body-parser'),
 path = require('path');
-
-
 var FileSaver = require('file-saver');
 
 
 
+
 var uploading = multer({
-  dest: '/home/aliize/Desktop/OOgalerija/studis11/',
+  dest: '/home/aliize/Desktop/OOgalerija/studis11/public/',
   limits: {fileSize: 1000000, files:1},
 })
 
 var schema = new mongoose.Schema({ src: 'string', type: 'string'});
 var Slika = mongoose.model('Slika', schema);
 
+var Student = mongoose.model('Student');
+var User = mongoose.model('User');
 
 router.post('/profile', uploading.single('upl'), function(req,res){
-	console.log("hadsfajhajs");
 	
+	
+	var slikica = new Slika({src: req.file.filename, type:"image"});
+	slikica.save(function(err){
+		if (err) res.send("errorororo");
+		else {
+			res.redirect('back');			
+		}
+	})
+
 	/*console.log(req.file); //form files
 	/* example output:
             { fieldname: 'upl',
@@ -36,7 +45,7 @@ router.post('/profile', uploading.single('upl'), function(req,res){
               path: 'uploads/436ec561793aa4dc475a88e84776b1b9',
               size: 277056 } //*/
 	 
-	res.send("bebe");
+	
 });
 
 

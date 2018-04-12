@@ -1,4 +1,4 @@
-var app = angular.module('studis', ['ui.router', 'ngFileUpload']);
+var app = angular.module('studis', ['ui.router']);
 
 
 app.config([
@@ -24,21 +24,21 @@ app.directive("slide",function($timeout){
         images : '='
       },
       
-      link : function(scope,elem,attrs){
+      link: function($scope,elem,attrs){
          
-        scope.currentIndex = 0;
-        scope.next = function(){
-          scope.currentIndex < scope.images.length-1 ? scope.currentIndex++ : scope.currentIndex = 0;        
+        $scope.currentIndex = 0;
+        $scope.next = function(){
+          $scope.currentIndex < $scope.images.length-1 ? $scope.currentIndex++ : $scope.currentIndex = 0;        
         }
-        scope.prev = function(){
-          scope.currentIndex > 0 ? scope.currentIndex-- : scope.currentIndex = scope.images.length-1;
+        $scope.prev = function(){
+          $scope.currentIndex > 0 ? $scope.currentIndex-- : $scope.currentIndex = $scope.images.length-1;
           
         }
-        scope.$watch('currentIndex',function(){
-          scope.images.forEach(function(image){
+        $scope.$watch('currentIndex',function(){
+          $scope.images.forEach(function(image){
             image.visible = false;
           })
-          scope.images[scope.currentIndex].visible = true;
+          $scope.images[$scope.currentIndex].visible = true;
         })
       }
     }
@@ -47,17 +47,15 @@ app.directive("slide",function($timeout){
 app.controller('MainCtrl', [
 '$scope', '$http', '$window', '$location', 
 function($scope, $http, $window, $location){
+  $scope.firstUpl = "e8f5ee7b258a61ec9428676b299919bf";
 
-
-  $http.get('http://localhost:3000/slike').then(function(response) {
+  $scope.images = [{}];
+  $http.get('/slike').then(function(response) {
+    console.log("nalagam slike....");
     $scope.images = response.data;
   });
-  $scope.images = [{}];
 
 
-
-
-  $scope.firstUpl = "edd35c9cb25db9c0a9d59c0ae6c6bef4";
   //preverim ce je logiran v sistem
   $scope.jeVpisan = function() {
     if($window.localStorage['studis']) return true;
@@ -106,6 +104,7 @@ function($scope, $http, $window, $location){
   };
 
   $scope.logoutFunkcija = function() {
+    console.log("izpisujem see...");
     $window.localStorage.removeItem('studis');
     $scope.vpisanStudent = false;
   }
