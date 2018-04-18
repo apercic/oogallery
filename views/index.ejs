@@ -4,7 +4,10 @@
     <meta charset=utf-8>
     <title>Gallery</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-file-upload/2.5.0/angular-file-upload.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -14,13 +17,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.0.4/ng-file-upload-shim.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.0.4/ng-file-upload.js"></script>
-
-
   </head>
   
-  <body ng-app="studis" style="background-color:powderblue;">
-    
-
+  <body ng-app="studis">
     <ui-view></ui-view>
 
 
@@ -32,38 +31,12 @@
             <a class="navbar-brand">Galerija</a>
           </div>
           <ul ng-show="vpisanStudent" class="nav navbar-nav">
-            <li class="active"><a href="#!/home">Home</a></li>
-            <li><a>pozdravljen/a: {{trenutni_uporabnik}}</a></li>
+            <li class="active"><a href="/#!/galerije">galerije</a></li>
+            <li><a>prijavljen kot: {{trenutni_uporabnik}}</a></li>
             <li><a ng-click="logoutFunkcija()">logout</a></li>
           </ul>
         </div>
       </nav>
-
-
-
-      <div ng-show="vpisanStudent">
-        <h3 align="center">MOJA PRVA GALERIJA</h3>
-        <br><br><br>
-        <div>
-          <!--<img src="1.jpeg" alt="rozica">
-          <IMG ng-src="{{firstUpl}}"/>
-          <IMG src="2.jpg"></IMG>-->
-        </div>
-
-        <div slide images='images'></div>
-
-
-        <br><br>
-
-        <form method="post" enctype="multipart/form-data" action="/profile">        
-          <input type="text" name="title" placeholder="title"/>        
-          <input type="file" name="upl"/>
-          <input type="submit"/>
-        </form>
-
-
-        
-      </div>
 
       <div ng-hide="vpisanStudent"><!--login/logout, trenutni uporabnik podatki z jwt zetoni-->
         <div class="panel panel-primary" style="height: 40vh; width: 50vw; margin:0 auto; padding-top: 8vh;">
@@ -83,31 +56,95 @@
     </script>
     <!--home.html -->
 
-
-    <script type="text/ng-template" id="/slide.html">
-      <div class="slider">
-      
-      <div class="row">
-        <div class="col-sm-6"><button ng-click="prev()" class="btn btn-success btn-block"><-</button></div>
-        <div class="col-sm-6"><button ng-click="next()" class="btn btn-success btn-block">-></button></div>
+    <!--galerije.html -->
+    <script type="text/ng-template" id="/galerije.html">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand">Galerija</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/#!/galerije">Domov</a></li>
+          <li><a>prijavljen kot: {{trenutni_uporabnik}}</a></li>
+          <li><a ng-click="logoutFunkcija()">logout</a></li>
+        </ul>
       </div>
+    </nav>
 
-       <div class="row">         
 
-          <div style="text-align: center" class="slide col-md-12" ng-repeat="image in images" ng-show="image.visible">
-            <img  ng-src="{{image.src}}" ng-if="image.type == 'image'"/>
-            <p align="middle">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
+          <input class="form-control" type="text" ng-model="ime_nove" placeholder="ime nove galerije"/>
+          <button class="btn btn-success btn-block" ng-click="nova_galerija()">Dodaj novo galerijo</button><br>
+          <p>{{error_nova_galerija}}</p>
+          <h1 align="center">Vse moje galerije</h1><br>
+
+          <div class="row">
+            <div class="col-xs-12" ng-repeat="galerija in galerije" >
+              <a ng-href="/#!/galerija/{{galerija.ime}}" class="btn btn-info btn-block" role="button">{{galerija.ime}}</a><br>
+              <!--<img ng-src="{{galerija.vseSlike[0]}}" style="height:10vh;width:10vw;"></img>-->
+            </div><br>
           </div>
-        
+        </div>
+        <div class="col-sm-2"></div>
       </div>
+    </script>
+    <!--galerije.html -->
 
+    <!--prikazslik.html -->
+    <script type="text/ng-template" id="/prikazslik.html">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand">Galerija</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/#!/galerije">Domov</a></li>
+          <li><a>prijavljen kot: {{trenutni_uporabnik}}</a></li>
+          <li><a ng-click="logoutFunkcija()">logout</a></li>
+        </ul>
+      </div>
+    </nav>
 
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
         
-        
+        <h1 align="center">Naloži novo sliko</h1><br>
+
+        <form method="post" enctype="multipart/form-data" action="{{'/shrani_sliko_v_galerijo/'+ime_galerije}}">        
+          <input ng-hide="true" class="form-control" type="text" name="title" placeholder="opis slike(to še ne dela)"/>
+
+          <label class="btn btn-primary btn-block" for="my-file-selector">
+            <input name="upl" id="my-file-selector" type="file" style="display:none" 
+              onchange="$('#upload-file-info').html(this.files[0].name)" required>
+               Izberi sliko
+          </label>
+          <label id="upload-file-info"></label>
+          <input type="submit" class="form-control"/>
+        </form><br><br>
+
+        <h1 align="center">Slike v galeriji {{ime_galerije}}</h1><br>
+          <div class="row">
+            <div class="col-xs-6 col-md-4" ng-repeat="x in slike_galerije track by $index">
+              <img ng-src="{{x}}" ng-click="odpri_vecjo_sliko(x)"></img>
+
+                <!--MODAL WINDOW--> 
+                <script type="text/ng-template" id="/myModalContent.html">
+                  <img ng-src="{{customer}}" style="height:100%;width:100%;"></img>
+                  <h3>Ime slike: {{customer}}</h3>
+                </script>
+            </div><br>
+          </div>
+      </div>
+      <div class="col-sm-2"></div>
     </div>
+   
 
 
     </script>
-    
+    <!--prikazslik.html -->
+
   </body>
 </html>

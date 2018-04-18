@@ -4,19 +4,15 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: #FFFFFF;
 }
 
 img {
 	height: 60vh;
 	width: 60vh;
-	border-radius: 30%;
 
-	border: 1px solid #ddd;
-	padding: 5px;
-
-	border:10px solid #021a40;
-
+	border: 1px solid #888;
+	margin: 5px;
 }
 
 

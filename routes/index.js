@@ -10,22 +10,62 @@ path = require('path');
 var FileSaver = require('file-saver');
 
 
-
-
 var uploading = multer({
   dest: '/home/aliize/Desktop/OOgalerija/studis11/public/',
   limits: {fileSize: 1000000, files:1},
 })
 
-var schema = new mongoose.Schema({ src: 'string', type: 'string'});
+var schema = new mongoose.Schema({ src:'string', type:'string'});
 var Slika = mongoose.model('Slika', schema);
 
-var Student = mongoose.model('Student');
+//galerija hrani json-e slik
+var schema_galerija = new mongoose.Schema({ ime:'string', vseSlike: ['string']});
+var Galerija = mongoose.model('Galerija', schema_galerija);
+//var Student = mongoose.model('Student');
 var User = mongoose.model('User');
 
-router.post('/profile', uploading.single('upl'), function(req,res){
-	
-	
+
+//dobi vse galerije
+router.get('/vse_galerije', function(req, res) {
+	Galerija.find(function(err, galerije) {
+		if (err) throw err;
+		res.send(galerije);
+	});
+});
+//ustvari novo galerijo
+//preverjaj da ni istega imena že v bazi
+router.get('/nova_galerija/:ime', function(req, res) {
+	var gale = new Galerija({ime:req.params.ime});
+	gale.save(function(err){
+		if (err) res.send("napaka pri ustvarjanju galerije");
+		Galerija.find(function(err, galerije) {
+			if (err) res.send("napaka pri ustvarjanju galerije");
+			res.send(galerije);
+		});
+	})
+});
+
+//dobi vse slike iz določene galerije
+router.get('/vse_slike_iz_galerije/:galerija', function(req, res) {
+	Galerija.findOne({'ime':req.params.galerija}, function(err, galerija) {
+		if (err) throw err;
+		res.send(galerija.vseSlike);
+	});
+});
+
+//shrani sliko v določeno galerijo
+//preveri da galerija sploh obstaja
+router.post('/shrani_sliko_v_galerijo/:galerija', uploading.single('upl'), function(req, res) {
+	Galerija.findOneAndUpdate({ime:req.params.galerija}, {$push:{vseSlike: req.file.filename}}, 
+		function(err, galerija) {
+		if (err) res.send("napaka");		
+		res.redirect('/#!/galerija/'+req.params.galerija);
+	});
+});
+
+
+
+/*router.post('/profile/:ime_galerije', uploading.single('upl'), function(req,res){	
 	var slikica = new Slika({src: req.file.filename, type:"image"});
 	slikica.save(function(err){
 		if (err) res.send("errorororo");
@@ -33,7 +73,6 @@ router.post('/profile', uploading.single('upl'), function(req,res){
 			res.redirect('back');			
 		}
 	})
-
 	/*console.log(req.file); //form files
 	/* example output:
             { fieldname: 'upl',
@@ -43,10 +82,9 @@ router.post('/profile', uploading.single('upl'), function(req,res){
               destination: './uploads/',
               filename: '436ec561793aa4dc475a88e84776b1b9',
               path: 'uploads/436ec561793aa4dc475a88e84776b1b9',
-              size: 277056 } //*/
-	 
+              size: 277056 } 
 	
-});
+}); //*/
 
 
 router.get('/register/:username/:password', function(req, res) {
@@ -69,24 +107,6 @@ router.post('/prijava/preveriPrijavo', function(req, res, next){
     if(user) res.send({status: "200", token: user.generateJWT()});
 	else res.send({status:"401", vzrok: info});
   })(req, res, next);
-});
-
-
-//dobi vse slike
-router.get('/slike', function(req, res) {
-	Slika.find(function(err, slike) {
-		if (err) throw err;
-		res.send(slike);
-	});
-});
-
-//shrani sliko
-router.get('/slike/:ime', function(req, res) {
-	var slikica = new Slika({ime:req.params.ime});
-	slikica.save(function(err){
-		if (err) res.send("napaka pri shranjevanju slike");
-		else res.send("shranjeno");
-	})
 });
 
 
