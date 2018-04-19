@@ -4,7 +4,6 @@
     <meta charset=utf-8>
     <title>Gallery</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"></script>
@@ -15,8 +14,8 @@
     <script src="/javascripts/angularApp.js"></script>
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">    
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.0.4/ng-file-upload-shim.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.0.4/ng-file-upload.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.0.4/ng-file-upload-shim.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.0.4/ng-file-upload.js"></script> -->
   </head>
   
   <body ng-app="studis">
@@ -46,7 +45,7 @@
           <div class="form-group">
             <input ng-model="geslo" placeholder="geslo" type="password" class="form-control">
           </div>
-          <button class="btn btn-success btn-block" ng-click="login_funkcija()">LOGIN</button><br><br>
+          <button class="btn btn-unique btn-block" ng-click="login_funkcija()">LOGIN</button><br><br>
 
           <div ng-show="pokazi_napako_login" class="alert alert-danger">
             <p ng-bind="login_status"></p>
@@ -76,15 +75,24 @@
       <div class="col-sm-2"></div>
       <div class="col-sm-8">
           <input class="form-control" type="text" ng-model="ime_nove" placeholder="ime nove galerije"/>
-          <button class="btn btn-success btn-block" ng-click="nova_galerija()">Dodaj novo galerijo</button><br>
+          <button class="btn btn-unique btn-block" ng-click="nova_galerija()">Dodaj novo galerijo</button><br>
           <p>{{error_nova_galerija}}</p>
           <h1 align="center">Vse moje galerije</h1><br>
 
           <div class="row">
-            <div class="col-xs-12" ng-repeat="galerija in galerije" >
-              <a ng-href="/#!/galerija/{{galerija.ime}}" class="btn btn-info btn-block" role="button">{{galerija.ime}}</a><br>
-              <!--<img ng-src="{{galerija.vseSlike[0]}}" style="height:10vh;width:10vw;"></img>-->
-            </div><br>
+            <div ng-repeat="galerija in galerije">
+              <div>
+                <div class="col-xs-6 col-md-4" style="border:1px solid black;">
+                  <p style="text-align:center"><a ng-href="/#!/galerija/{{galerija.ime}}">
+                    <img ng-src="{{galerija.vseSlike[0]}}" style="height:20vh;width:20vw;"></img>
+                  </a></p>
+                  <a ng-href="/#!/galerija/{{galerija.ime}}" class="btn btn-default btn-block" role="button">{{galerija.ime}}</a><hr>
+                  <button class="btn btn-unique btn-block" ng-click="odstrani_galerijo(galerija.ime,$index)">zbriši galerijo</button>
+                </div>
+                
+              </div>
+            </div>
+            <br>
           </div>
         </div>
         <div class="col-sm-2"></div>
@@ -116,7 +124,7 @@
         <form method="post" enctype="multipart/form-data" action="{{'/shrani_sliko_v_galerijo/'+ime_galerije}}">        
           <input ng-hide="true" class="form-control" type="text" name="title" placeholder="opis slike(to še ne dela)"/>
 
-          <label class="btn btn-primary btn-block" for="my-file-selector">
+          <label class="btn btn-unique btn-block" for="my-file-selector">
             <input name="upl" id="my-file-selector" type="file" style="display:none" 
               onchange="$('#upload-file-info').html(this.files[0].name)" required>
                Izberi sliko

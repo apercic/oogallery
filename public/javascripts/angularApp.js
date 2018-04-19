@@ -67,15 +67,9 @@ function($scope, $http, $window, $location){
   });
 
 
-  //preverim ce je logiran v sistem
-  $scope.jeVpisan = function() {
-    if($window.localStorage['studis']) return true;
-    return false;
-  }
-
   //email trenutno vpisanega
   $scope.usernameTrenutnoVpisanega = function() {
-    if ($scope.jeVpisan()) {
+    if ($window.localStorage['studis']) {
       var zeton = $window.localStorage['studis'];
       return JSON.parse($window.atob(zeton.split('.')[1]));
     }
@@ -84,7 +78,7 @@ function($scope, $http, $window, $location){
 
   //s to spremenljivko na prvi strani z ng-show nastavlam kaj je prikazano
   $scope.vpisanStudent = $window.localStorage['studis'];
-  if ($scope.jeVpisan()) {
+  if ($window.localStorage['studis']) {
     $scope.trenutni_uporabnik = ($scope.usernameTrenutnoVpisanega()).username;
     $scope.id_trenutnega_uporabnika = ($scope.usernameTrenutnoVpisanega())._id;
   }  
@@ -132,11 +126,25 @@ function($scope, $http, $window, $location){
     }
     $scope.error_nova_galerija = "";
     $http.get('/nova_galerija/'+$scope.ime_nove).then(function(response) {
-      //dodam zadnji element  
-      $scope.galerije.push(response.data[response.data.length - 1]);
-      $scope.error_nova_galerija = "nova galerija uspešno ustvarjena";
+      if (response.data == "Galerija s tem imenom že obstaja") {
+        $scope.error_nova_galerija = "galerija s tem imenom že obstaja";
+        return;
+      }
+      else {
+        console.log(response);
+        //dodam zadnji element  
+        $scope.galerije.push(response.data[response.data.length - 1]);
+        $scope.error_nova_galerija = "nova galerija uspešno ustvarjena";        
+      }
     });
   }
+
+  $scope.odstrani_galerijo = function(ime, $index) {
+    $http.get('/zbrisi_galerija/'+ime).then(function(response) {      
+      $scope.galerije.splice($index, 1);
+    });
+  }
+
 
 }]);
 
@@ -150,8 +158,21 @@ function($scope, $http, $window, $location, $stateParams, $uibModal){
     $scope.slike_galerije = response.data;
   });
 
-  $scope.odpri_vecjo_sliko = function(slika) {
+  //email trenutno vpisanega
+  $scope.usernameTrenutnoVpisanega = function() {
+    if ($window.localStorage['studis']) {
+      var zeton = $window.localStorage['studis'];
+      return JSON.parse($window.atob(zeton.split('.')[1]));
+    }
+    else return "prosim logiraj se";
+  }
+  //s to spremenljivko na prvi strani z ng-show nastavlam kaj je prikazano
+  $scope.vpisanStudent = $window.localStorage['studis'];
+  if ($window.localStorage['studis'])
+    $scope.trenutni_uporabnik = ($scope.usernameTrenutnoVpisanega()).username;
+    
 
+  $scope.odpri_vecjo_sliko = function(slika) {
     var modalInstance = $uibModal.open({
       controller: "ModalInstanceCtrl",
       templateUrl: '/myModalContent.html',

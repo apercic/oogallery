@@ -35,15 +35,37 @@ router.get('/vse_galerije', function(req, res) {
 //ustvari novo galerijo
 //preverjaj da ni istega imena že v bazi
 router.get('/nova_galerija/:ime', function(req, res) {
-	var gale = new Galerija({ime:req.params.ime});
-	gale.save(function(err){
-		if (err) res.send("napaka pri ustvarjanju galerije");
-		Galerija.find(function(err, galerije) {
-			if (err) res.send("napaka pri ustvarjanju galerije");
-			res.send(galerije);
-		});
-	})
+	//preverimo da galerija s tem imenom še ne obstaja
+	Galerija.findOne({'ime':req.params.ime}, function(err, ze_obstojeca) {
+		if (err) throw err;
+		console.log(ze_obstojeca);
+		//če že obstaja z istim imenom, ne ustvarimo še ene
+		if (ze_obstojeca != null) {
+			res.send("Galerija s tem imenom že obstaja");
+		}
+		else {
+			var gale = new Galerija({ime:req.params.ime});
+			gale.save(function(err){
+				if (err) res.send("napaka pri ustvarjanju galerije");
+				Galerija.find(function(err, galerije) {
+					if (err) res.send("napaka pri ustvarjanju galerije");
+					res.send(galerije);
+				});
+			})
+		}
+	});
+
+	
 });
+
+//zbriše galerijo
+router.get('/zbrisi_galerija/:ime', function(req, res) {
+	Galerija.remove({'ime':req.params.ime}, function(err) {
+		if (err) throw err;
+		res.send("uspešno zbrisana galerija");
+	});
+});
+
 
 //dobi vse slike iz določene galerije
 router.get('/vse_slike_iz_galerije/:galerija', function(req, res) {
