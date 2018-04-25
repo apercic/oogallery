@@ -11,13 +11,6 @@ a {
   color: #FFFFFF;
 }
 
-img {
-	height: 60vh;
-	width: 60vh;
-
-	border: 1px solid #888;
-	margin: 5px;
-}
 
 html {
   font-size: 14px;
@@ -129,6 +122,8 @@ h1, h2, h3, h4, h5, h6 {
   color: white;
 }
 
-.float-right {
-  float: right;
+.thumbnail img {
+    width: 100%;
+	height: 30vh;
+	display:block
 }

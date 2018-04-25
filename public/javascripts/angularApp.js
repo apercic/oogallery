@@ -51,8 +51,8 @@ function($stateProvider, $urlRouterProvider, $windowProvider) {
 }]);
 
 //controller za modalno okno
-app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, customer) {
-  $scope.customer = customer;
+app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, povecana_slika) {
+  $scope.povecana_slika = povecana_slika;
 });
 
 
@@ -176,15 +176,20 @@ function($scope, $http, $window, $location, $stateParams, $uibModal){
     var modalInstance = $uibModal.open({
       controller: "ModalInstanceCtrl",
       templateUrl: '/myModalContent.html',
-      resolve: { customer: 
+      resolve: { povecana_slika: 
           function() {
             console.log(slika);
             return slika;
           }
       }
-
-
     }).result.then(function(){}, function(res){});
+  }
+
+  $scope.zbrisi_sliko = function(galerija_ime, slika_ime, $index) {
+    console.log(slika_ime);
+    $http.get('/zbrisi_sliko/'+galerija_ime+'/'+slika_ime).then(function(response) {      
+      $scope.slike_galerije.splice($index, 1);
+    });
   }
 
 

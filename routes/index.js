@@ -11,8 +11,8 @@ var FileSaver = require('file-saver');
 
 
 var uploading = multer({
-  dest: '/public',
-  limits: {fileSize: 1000000, files:1},
+  dest: './public/',
+  //limits: {fileSize: 1000000, files:1}
 })
 
 var schema = new mongoose.Schema({ src:'string', type:'string'});
@@ -86,27 +86,14 @@ router.post('/shrani_sliko_v_galerijo/:galerija', uploading.single('upl'), funct
 });
 
 
-
-/*router.post('/profile/:ime_galerije', uploading.single('upl'), function(req,res){	
-	var slikica = new Slika({src: req.file.filename, type:"image"});
-	slikica.save(function(err){
-		if (err) res.send("errorororo");
-		else {
-			res.redirect('back');			
-		}
-	})
-	/*console.log(req.file); //form files
-	/* example output:
-            { fieldname: 'upl',
-              originalname: 'grumpy.png',
-              encoding: '7bit',
-              mimetype: 'image/png',
-              destination: './uploads/',
-              filename: '436ec561793aa4dc475a88e84776b1b9',
-              path: 'uploads/436ec561793aa4dc475a88e84776b1b9',
-              size: 277056 } 
-	
-}); //*/
+//zbriše sliko iz galerije......
+router.get('/zbrisi_sliko/:galerija_ime/:slika_ime', function(req, res) {
+	Galerija.findOneAndUpdate({ime:req.params.galerija_ime}, {$pull:{vseSlike: req.params.slika_ime}}, 
+		function(err, galerija) {
+		if (err) res.send("napaka");		
+		res.redirect('/#!/galerija/'+req.params.galerija_ime);
+	});
+});
 
 
 router.get('/register/:username/:password', function(req, res) {
