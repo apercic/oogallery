@@ -11,7 +11,7 @@ var FileSaver = require('file-saver');
 
 
 var uploading = multer({
-  dest: '/home/aliize/Desktop/OOgalerija/studis11/public/',
+  dest: './public/',
   limits: {fileSize: 1000000, files:1},
 })
 
