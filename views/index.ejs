@@ -12,10 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="/javascripts/angularApp.js"></script>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">    
-
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.0.4/ng-file-upload-shim.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.0.4/ng-file-upload.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
   </head>
   
   <body ng-app="studis">
@@ -103,10 +100,9 @@
     <!--prikazslik.html -->
     <script type="text/ng-template" id="/prikazslik.html">
     <nav class="navbar navbar-inverse">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand">Galerija</a>
-        </div>
+      <div class="container-fluid">        
+        <a class="navbar-brand">Galerija</a>
+        
         <ul class="nav navbar-nav">
           <li class="active"><a href="/#!/galerije">Domov</a></li>
           <li><a>prijavljen kot: {{trenutni_uporabnik}}</a></li>
@@ -137,36 +133,19 @@
           <div class="row">
             <div class="col-xs-6 col-md-4 thumbnail" ng-repeat="x in slike_galerije track by $index">
               <img ng-src="{{x}}" ng-click="odpri_vecjo_sliko(x)"></img>
-
-
-
-
-
+              <label>ime slike</label>
+              <button style="float:right;" ng-click="zbrisi_sliko(ime_galerije, x, $index)">X</button>
 
                 <!--MODAL WINDOW--> 
                 <script type="text/ng-template" id="/myModalContent.html">
-                  <img ng-src="{{customer}}" style="height:100%;width:100%;"></img>
-                  <h3>Ime slike: {{customer}}</h3>
+                  <img ng-src="{{povecana_slika}}" style="height:100%;width:100%;"></img>
+                  <h3>Ime slike: {{povecana_slika}}</h3>
                 </script>
             </div><br>
           </div>
       </div>
       <div class="col-sm-2"></div>
     </div>
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </script>
     <!--prikazslik.html -->
