@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
 body {
   padding: 10px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	font-family: 'Open Sans', sans-serif;
 }
 
 a {
@@ -15,4 +19,116 @@ img {
 	margin: 5px;
 }
 
+html {
+  font-size: 14px;
+}
 
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: .5rem;
+}
+
+/**
+ * Tiles
+ */
+.tile {
+  background-color: #ffffff;
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.2), 0 0.25rem 0.25rem rgba(0, 0, 0, 0.2);
+	max-width: 28rem;
+	height: 29rem;
+	margin: 0 auto;
+	margin-top: 5rem;
+}
+.tile .tile-header {
+  background-image: url("/nature.jpeg");
+  background-position: center;
+  background-size: cover;
+	height: 13.5rem;
+}
+.tile .tile-body {
+  padding: 2rem;
+}
+
+/**
+ * Forms
+ */
+.form-input {
+  display: block;
+  position: relative;
+  margin-bottom: 1rem;
+}
+.form-input > .material-icons {
+  position: absolute;
+  font-size: 2rem;
+  top: 1.2rem;
+}
+.form-input > .material-icons ~ input, .form-input > .material-icons ~ .label, .form-input > .material-icons ~ .underline {
+  margin-left: 3rem;
+  width: calc(100% - 2.25rem);
+}
+.form-input input {
+  border: none;
+  box-shadow: none;
+  padding-top: 1.5rem;
+  padding-right: 0;
+  padding-bottom: 0.5rem;
+  padding-left: 0;
+  outline-style: none;
+	width: 100%;
+	margin-bottom: 1px;
+}
+.form-input input ~ .label {
+  color: #868e96;
+  font-size: 1rem;
+  margin: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  transition: top .2s,font .2s;
+  z-index: 1;
+}
+.form-input input ~ .underline {
+  background-color: #bdc1c5;
+  height: 1px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+.form-input input:hover ~ .underline, .form-input input:focus ~ .underline {
+  background-color: #07beb8;
+}
+.form-input input:hover ~ .label, .form-input input:focus ~ .label {
+  color: #07beb8;
+}
+.form-input input:focus ~ .underline {
+  height: 2px;
+}
+.form-input input:focus ~ .label, .form-input input:valid ~ .label {
+  top: 0;
+  font-size: 0.85rem;
+}
+.form-input input:-webkit-autofill ~ .label {
+  top: 0;
+  font-size: 0.85rem;
+}
+
+/**
+ * Buttons
+ */
+.btn {
+  border-radius: .2rem;
+  display: inline-block;
+  padding-top: 0.5rem;
+  padding-right: 1rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+}
+
+.btn-irenic {
+  background-color: #07beb8;
+  color: white;
+}
+
+.float-right {
+  float: right;
+}
