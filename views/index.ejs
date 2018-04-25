@@ -135,8 +135,13 @@
 
         <h1 align="center">Slike v galeriji {{ime_galerije}}</h1><br>
           <div class="row">
-            <div class="col-xs-6 col-md-4" ng-repeat="x in slike_galerije track by $index">
+            <div class="col-xs-6 col-md-4 thumbnail" ng-repeat="x in slike_galerije track by $index">
               <img ng-src="{{x}}" ng-click="odpri_vecjo_sliko(x)"></img>
+
+
+
+
+
 
                 <!--MODAL WINDOW--> 
                 <script type="text/ng-template" id="/myModalContent.html">
@@ -149,6 +154,18 @@
       <div class="col-sm-2"></div>
     </div>
    
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     </script>
