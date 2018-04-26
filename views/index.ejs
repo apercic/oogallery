@@ -92,11 +92,11 @@
 
           <div ng-repeat="galerija in galerije">
 
-            <div class="col-xs-6 col-md-4 container thumbnail fill">
+            <div class="col-xs-6 col-md-4 container fill">
               <p style="text-align:center"><a ng-href="/#!/galerija/{{galerija.ime}}">
                 
 
-                  <img ng-if="galerija.vseSlike[0]" class="image fill" ng-src="{{galerija.vseSlike[0]}}" style="max-height:30vh;max-width:30vw;min-height:30vh;min-width:30vw;"></img>
+                  <img ng-if="galerija.vseSlike[0]" class="image fill" ng-src="{{galerija.vseSlike[0]}}" style="max-height:30vh;max-width:30vw;min-height:30vh;min-width:30vw;" align="middle"></img>
 
                   <img ng-if="!galerija.vseSlike[0]" class="image fill" ng-src="placeholder.png" style="max-height:30vh;max-width:30vw;min-height:30vh;min-width:30vw;"></img>
 
@@ -125,10 +125,12 @@
 
   <!--prikazslik.html -->
   <script type="text/ng-template" id="/prikazslik.html">
+    
     <nav class="navbar navbar-inverse">
-      <div class="container-fluid">        
-        <a class="navbar-brand">Galerija</a>
-        
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand">Galerija</a>
+        </div>
         <ul class="nav navbar-nav">
           <li class="active">
             <a href="/#!/galerije">Domov</a>
@@ -142,6 +144,10 @@
         </ul>
       </div>
     </nav>
+
+
+
+    
 
     <div class="row">
       <div class="col-sm-2"></div>
