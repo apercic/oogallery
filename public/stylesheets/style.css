@@ -125,18 +125,18 @@ h1, h2, h3, h4, h5, h6 {
 .thumbnail img {
   width: 100%;
 	height: 30vh;
-	display:block
+
 }
 
 
 .container {
-    position: relative;    
+    position: relative;   
 }
 
 .image {
   opacity: 1;
-  display: block;
-  
+  display: block; 
+  width: 100%;
 
   transition: .5s ease;
   backface-visibility: hidden;
@@ -182,4 +182,10 @@ h1, h2, h3, h4, h5, h6 {
   color: white;
   font-size: 16px;
   padding: 16px 32px;
+}
+
+.fill {
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
 }

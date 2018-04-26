@@ -92,15 +92,14 @@
 
           <div ng-repeat="galerija in galerije">
 
-            <div class="col-xs-6 col-md-4 container thumbnail">
+            <div class="col-xs-6 col-md-4 container thumbnail fill">
               <p style="text-align:center"><a ng-href="/#!/galerija/{{galerija.ime}}">
                 
-                <div ng-if="galerija.vseSlike[0]">
-                  <img class="image" ng-src="{{galerija.vseSlike[0]}}" style="height:20vh;width:20vw;"></img>
-                </div>
-                <div ng-if="!galerija.vseSlike[0]">
-                    <img class="image" ng-src="placeholder.png" style="height:20vh;width:20vw;"></img>
-                </div>
+
+                  <img ng-if="galerija.vseSlike[0]" class="image fill" ng-src="{{galerija.vseSlike[0]}}" style="max-height:30vh;max-width:30vw;min-height:30vh;min-width:30vw;"></img>
+
+                  <img ng-if="!galerija.vseSlike[0]" class="image fill" ng-src="placeholder.png" style="max-height:30vh;max-width:30vw;min-height:30vh;min-width:30vw;"></img>
+
 
               </a>
               </p>
