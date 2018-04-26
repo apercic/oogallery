@@ -94,10 +94,17 @@
 
             <div class="col-xs-6 col-md-4 container thumbnail">
               <p style="text-align:center"><a ng-href="/#!/galerija/{{galerija.ime}}">
-                <img class="image" ng-src="{{galerija.vseSlike[0]}}" style="height:30vh;width:30vw;"></img>
+                
+                <div ng-if="galerija.vseSlike[0]">
+                  <img class="image" ng-src="{{galerija.vseSlike[0]}}" style="height:20vh;width:20vw;"></img>
+                </div>
+                <div ng-if="!galerija.vseSlike[0]">
+                    <img class="image" ng-src="placeholder.png" style="height:20vh;width:20vw;"></img>
+                </div>
+
               </a>
               </p>
-
+              
               <div class="middle">
                 <a ng-href="/#!/galerija/{{galerija.ime}}" class="btn btn-unique" role="button">{{galerija.ime}}</a>
               </div>
