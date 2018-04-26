@@ -89,11 +89,12 @@
         <h1 align="center">Vse moje galerije</h1><br>
 
         <div class="row">
+
           <div ng-repeat="galerija in galerije">
 
-            <div class="col-xs-6 col-md-4 container" style="border:1px solid black;">
+            <div class="col-xs-6 col-md-4 container thumbnail">
               <p style="text-align:center"><a ng-href="/#!/galerija/{{galerija.ime}}">
-                <img class="image" ng-src="{{galerija.vseSlike[0]}}" style="height:20vh;width:20vw;"></img>
+                <img class="image" ng-src="{{galerija.vseSlike[0]}}" style="height:30vh;width:30vw;"></img>
               </a>
               </p>
 
@@ -104,18 +105,13 @@
               <div class="down">
                 <button class="btn btn-danger" ng-click="odstrani_galerijo(galerija.ime,$index)">zbriši galerijo</button>
               </div>
+            </div>
 
-
-            
-            
-            
           </div>
         </div>
 
+
       </div>
-
-
-
       <div class="col-sm-2"></div>
     </div>
   </script>
