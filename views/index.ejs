@@ -10,7 +10,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-file-upload/2.5.0/angular-file-upload.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.5/css/mdb.min.css" />
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.5/js/mdb.min.js"></script>
+
+
     <script src="/javascripts/angularApp.js"></script>
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
   </head>
@@ -87,14 +91,14 @@
           <div class="row">
             <div ng-repeat="galerija in galerije">
               <div>
-                <div class="col-xs-6 col-md-6" style="border:1px solid black;">
+                <div class="col-xs-6 col-md-4" style="border:1px solid black;">
                   <p style="text-align:center"><a ng-href="/#!/galerija/{{galerija.ime}}">
                     <img ng-src="{{galerija.vseSlike[0]}}" style="height:20vh;width:20vw;"></img>
                   </a>
                 </p>
-                <a ng-href="/#!/galerija/{{galerija.ime}}" class="btn btn-default btn-block" role="button">{{galerija.ime}}</a>
-                <hr>
-                <button class="btn btn-unique btn-block" ng-click="odstrani_galerijo(galerija.ime,$index)">zbriši galerijo</button>
+                <a ng-href="/#!/galerija/{{galerija.ime}}" class="btn btn-elegant btn-block" role="button">{{galerija.ime}}</a>
+                
+                <button class="btn btn-outline-danger" ng-click="odstrani_galerijo(galerija.ime,$index)">zbriši galerijo</button>
               </div>
 
             </div>
@@ -149,8 +153,8 @@
           <div class="row">
             <div class="col-xs-6 col-md-4 thumbnail" ng-repeat="x in slike_galerije track by $index">
               <img ng-src="{{x}}" ng-click="odpri_vecjo_sliko(x)"></img>
-              <label>ime slike</label>
-              <button style="float:right;" ng-click="zbrisi_sliko(ime_galerije, x, $index)">X</button>
+              
+              <button class="btn btn-outline-danger" style="float:right;" ng-click="zbrisi_sliko(ime_galerije, x, $index)">zbriši sliko</button>
 
                 <!--MODAL WINDOW--> 
                 <script type="text/ng-template" id="/myModalContent.html">
