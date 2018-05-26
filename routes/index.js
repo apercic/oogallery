@@ -71,6 +71,10 @@ router.get('/zbrisi_galerija/:ime', function(req, res) {
 router.get('/vse_slike_iz_galerije/:galerija', function(req, res) {
 	Galerija.findOne({'ime':req.params.galerija}, function(err, galerija) {
 		if (err) throw err;
+		if (galerija == null) {
+			console.log("ta galerija ne obstaja");
+			return [];
+		}
 		res.send(galerija.vseSlike);
 	});
 });

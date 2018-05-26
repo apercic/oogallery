@@ -1,4 +1,4 @@
-var app = angular.module('studis', ['ui.router', 'ui.bootstrap']);
+var app = angular.module('galerija', ['ui.router', 'ui.bootstrap']);
 
 
 app.config([
@@ -15,7 +15,9 @@ function($stateProvider, $urlRouterProvider, $windowProvider) {
       resolve: {
             function(){
                 if ($window.localStorage['galerija'])  {
-                    $window.location.href = '/#!/galerije';
+                    var deferred = $q.defer();
+                    deferred.reject();
+                    return deferred.promise.catch(function () { $state.go('galerije'); });
                 }
             }
         }      
@@ -26,24 +28,19 @@ function($stateProvider, $urlRouterProvider, $windowProvider) {
       templateUrl: '/galerije.html',
       controller: 'MainCtrl',
       resolve: {
-            function(){
+            function($q, $state){
                 if (!$window.localStorage['galerija'])  {
-                    $window.location.href = '/#!/home';
+                    var deferred = $q.defer();
+                    deferred.reject();
+                    return deferred.promise.catch(function () { $state.go('home'); });
                 }
             }
-        }      
+      }      
     })
     .state('prikazslik', {
       url: '/galerija/{ime}',
       templateUrl: '/prikazslik.html',
-      controller: 'PrikazSlikCtrl',
-      resolve: {
-            function(){
-                if (!$window.localStorage['galerija'])  {
-                    $window.location.href = '/#!/home';
-                }
-            }
-        }
+      controller: 'PrikazSlikCtrl'
     });
 
   $urlRouterProvider.otherwise('home');
@@ -74,8 +71,8 @@ function($scope, $http, $window, $location){
     /*$http.post('/prijava/preveriPrijavo',
      {elektronska_posta: $scope.elektronska_posta, geslo: $scope.geslo}).then(function(response) {      
       if (response.data.status == "200") {
-        $window.localStorage['studis'] = response.data.token;
-        $scope.vpisanStudent = $window.localStorage['studis'];
+        $window.localStorage['galerija'] = response.data.token;
+        $scope.vpisanStudent = $window.localStorage['galerija'];
         $scope.trenutni_uporabnik = ($scope.usernameTrenutnoVpisanega()).username;
         $scope.id_trenutnega_uporabnika = ($scope.usernameTrenutnoVpisanega())._id;
         $window.location.href = '/#!/galerije';
@@ -89,6 +86,7 @@ function($scope, $http, $window, $location){
     else if ($scope.elektronska_posta == "ana" && $scope.geslo == "ana") {
       $window.localStorage['galerija'] = true;
       $window.location.href = '/#!/galerije';
+      $route.reload();
     }
 
     else {
@@ -141,7 +139,10 @@ function($scope, $http, $window, $location, $stateParams, $uibModal){
   $scope.slike_galerije = [];
   $http.get('/vse_slike_iz_galerije/'+$stateParams.ime).then(function(response) {    
     $scope.slike_galerije = response.data;
-  });    
+  });
+
+  if ($window.localStorage['galerija'])
+    $scope.logged_in = true;
 
   $scope.odpri_vecjo_sliko = function(slika) {
     var modalInstance = $uibModal.open({
