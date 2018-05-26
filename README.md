@@ -3,7 +3,7 @@ galerija pri predmetu osnove oblikovanja
 
 
 
--start mongodb
+-start mongodb\n
 -npm install
 -nodemon
 
