@@ -21,8 +21,8 @@ var Slika = mongoose.model('Slika', schema);
 //galerija hrani json-e slik
 var schema_galerija = new mongoose.Schema({ ime:'string', vseSlike: ['string']});
 var Galerija = mongoose.model('Galerija', schema_galerija);
-//var Student = mongoose.model('Student');
-var User = mongoose.model('User');
+
+
 
 
 //dobi vse galerije
@@ -100,7 +100,7 @@ router.get('/zbrisi_sliko/:galerija_ime/:slika_ime', function(req, res) {
 });
 
 
-router.get('/register/:username/:password', function(req, res) {
+/*router.get('/register/:username/:password', function(req, res) {
 	var user = new User({username:req.params.username});
 	user.setPassword(req.params.password);
 
@@ -108,9 +108,9 @@ router.get('/register/:username/:password', function(req, res) {
 		if (err) throw err;
 		res.send({token: user.generateJWT()})
 	});
-});
+});//*/
 
-router.post('/prijava/preveriPrijavo', function(req, res, next){
+/*router.post('/prijava/preveriPrijavo', function(req, res, next){
 	req.body.username = req.body.elektronska_posta;
 	req.body.password = req.body.geslo;
 
@@ -120,7 +120,7 @@ router.post('/prijava/preveriPrijavo', function(req, res, next){
     if(user) res.send({status: "200", token: user.generateJWT()});
 	else res.send({status:"401", vzrok: info});
   })(req, res, next);
-});
+});//*/
 
 
 /* GET home page. */
