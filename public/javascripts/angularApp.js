@@ -13,7 +13,7 @@ function($stateProvider, $urlRouterProvider, $windowProvider) {
       templateUrl: '/home.html',
       controller: 'MainCtrl',
       resolve: {
-            function(){
+            function($q, $state){
                 if ($window.localStorage['galerija'])  {
                     var deferred = $q.defer();
                     deferred.reject();
@@ -34,7 +34,7 @@ function($stateProvider, $urlRouterProvider, $windowProvider) {
                     deferred.reject();
                     return deferred.promise.catch(function () { $state.go('home'); });
                 }
-            }
+            }//*/
       }      
     })
     .state('prikazslik', {

@@ -11,8 +11,7 @@ var FileSaver = require('file-saver');
 
 
 var uploading = multer({
-  dest: './public/',
-  //limits: {fileSize: 1000000, files:1}
+  dest: './public/'
 })
 
 var schema = new mongoose.Schema({ src:'string', type:'string'});
