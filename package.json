@@ -2,11 +2,10 @@
   "name": "studis11",
   "version": "0.0.0",
   "private": true,
-  "main":"app.js",
+  "main": "app.js",
   "scripts": {
     "start": "node ./bin/www",
-    "prod": "NODE_ENV=production node app.js",
-    "postinstall": "webpack -p"
+    "prod": "NODE_ENV=production node app.js"
   },
   "engines": {
     "node": "8.11.1"
