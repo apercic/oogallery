@@ -15,10 +15,8 @@ var multer = require('multer'),
 //use when running locally
 //var url = 'mongodb://localhost/gallery';
 //use when in production
-var url = process.env.MONGOLAB_URI;
+var url = 'mongodb://ana:ana123@ds147440.mlab.com:47440/galerija123';
 mongoose.connect(url);
-
-//for heroku: heroku config:set MONGOLAB_URI=database_uri_here
 
 var routes = require('./routes/index');
 
