@@ -13,9 +13,9 @@ var multer = require('multer'),
 
 
 //use when running locally
-//var url = 'mongodb://localhost/gallery';
+var url = 'mongodb://localhost/gallery';
 //use when in production
-var url = 'mongodb://ana:ana123@ds147440.mlab.com:47440/galerija123';
+//var url = 'mongodb://ana:ana123@ds147440.mlab.com:47440/galerija123';
 mongoose.connect(url);
 
 var routes = require('./routes/index');
