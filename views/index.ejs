@@ -104,8 +104,8 @@
             <div class="col-xs-6 col-md-4 container fill">
               <p style="text-align:center">
                 <a ng-href="/#!/galerija/{{galerija.ime}}">
-                  <img ng-if="galerija.vseSlike[0]" class="image fill" ng-src="{{galerija.vseSlike[0]}}" style="max-height:30vh;min-height:30vh;min-width:30vw;"></img>
-                  <img ng-if="!galerija.vseSlike[0]" class="image fill" ng-src="placeholder.png" style="max-height:30vh;min-height:30vh;min-width:30vw;"></img>
+                  <img ng-if="galerija.vseSlike[0]" class="image fill" ng-src="{{galerija.vseSlike[0]}}" style="max-height:30vh;min-height:30vh;min-width:30vw;">
+                  <img ng-if="!galerija.vseSlike[0]" class="image fill" ng-src="placeholder.png" style="max-height:30vh;min-height:30vh;min-width:30vw;">
                 </a>
               </p>
               
@@ -164,8 +164,7 @@
 
             <div class="col-xs-6 col-md-4 container fill" ng-repeat="x in slike_galerije track by $index">
                 <p style="text-align:center">                  
-                  <img ng-src="{{x}}" ng-click="odpri_vecjo_sliko(x,$index)" class="image fill" style="max-height:30vh;min-height:30vh;min-width:30vw;"></img>         
-                </p>
+                  <img ng-src="{{x}}" ng-click="odpri_vecjo_sliko(x,$index)" class="image fill" style="max-height:30vh;min-height:30vh;min-width:30vw;"></p>
                 
                 <div class="middle">
                    <button class="btn btn-unique" ng-click="odpri_vecjo_sliko(x,$index)" style="float:right;">Prikaži večjo</button>
@@ -176,7 +175,7 @@
 
                 <!--MODAL WINDOW--> 
                 <script type="text/ng-template" id="/myModalContent.html">
-                  <img ng-src="{{povecana_slika}}" style="height:80vh;width:80vw;" class="center"></img>
+                  <img ng-src="{{povecana_slika}}" style="height:80vh;width:80vw;" class="center">
                   <h3>{{opis_povecana_slika}}</h3>
                 </script>
             </div>
