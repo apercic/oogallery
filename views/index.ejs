@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title>Gallery</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-file-upload/2.5.0/angular-file-upload.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.5/css/mdb.min.css" />
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.5/js/mdb.min.js"></script>
+
+
+    <script src="/javascripts/angularApp.js"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+  </head>
+  
+  <body ng-app="galerija">
+    <ui-view></ui-view>
+
+    <!--home.html -->
+    <script type="text/ng-template" id="/home.html">
+      <nav class="navbar navbar-inverse">
+      <div class="container-fluid">        
+        <a class="navbar-brand" style="color:white;">Galerija</a>
+      </div>
+    </nav>
+
+    <div class="tile">
+      <div class="tile-header">
+        <h2 style="color: black; opacity:.85; font-size: 2.8rem; display: flex; justify-content: center; align-items: center; height: 100%;">SIGN IN</h2>
+      </div>
+      <div class="tile-body">
+        <form id="form">
+          <label class="form-input">
+            <i class="material-icons">person</i>
+            <input type="text" autofocus="true" ng-model="elektronska_posta" placeholder="username" required />
+            <span class="underline"></span>
+          </label>
+
+          <label class="form-input">
+            <i class="material-icons">lock</i>
+            <input type="password" ng-model="geslo" placeholder="password" required />
+            <span class="underline"></span>
+          </label>
+
+          <div class="row">
+            <div class="submit-container clearfix" style="margin-top:1rem;">
+              <button ng-click="login_funkcija()" class="btn btn-unique col-xs-10 btn-lg" style="float: right">SIGN IN</button>
+              </div>
+            </div>
+
+            <div >
+              <br>
+              <b style="color: red; float: right">{{login_status}}</b>
+            </div>
+            
+          </div>
+      </div>
+      </form>
+    </div>
+    </div>
+  </script>
+  <!--home.html -->
+
+  <!--galerije.html -->
+  <script type="text/ng-template" id="/galerije.html">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        
+        <a class="navbar-brand" style="color:white;">Galerija</a>
+        
+        <ul class="nav navbar-nav">
+          <li class="active">
+            <a href="/#!/galerije">Domov</a>
+          </li>
+          <li>
+            <a ng-click="logoutFunkcija()">logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="row">
+      <div class="col-xs-2"></div>
+      <div class="col-xs-8">
+        <h1 align="center">Vse moje galerije</h1><br>
+        <div class="row">
+
+          <div class="col-xs-6 col-md-4 container fill">
+            <h3 align="center">Ustvari novo galerijo</h3>
+            <input class="form-control" type="text" ng-model="ime_nove" placeholder="ime nove galerije"/>
+            <button class="btn btn-unique btn-block" ng-click="nova_galerija()">Dodaj novo galerijo</button><br>
+            <p align="center">{{error_nova_galerija}}</p>
+          </div>
+
+
+          <div ng-repeat="galerija in galerije">
+
+            <div class="col-xs-6 col-md-4 container fill">
+              <p style="text-align:center">
+                <a ng-href="/#!/galerija/{{galerija.ime}}">
+                  <img ng-if="galerija.vseSlike[0]" class="image fill" ng-src="{{galerija.vseSlike[0]}}" style="max-height:30vh;min-height:30vh;min-width:30vw;"></img>
+                  <img ng-if="!galerija.vseSlike[0]" class="image fill" ng-src="placeholder.png" style="max-height:30vh;min-height:30vh;min-width:30vw;"></img>
+                </a>
+              </p>
+              
+              <div class="middle">
+                <a ng-href="/#!/galerija/{{galerija.ime}}" class="btn btn-unique" role="button">{{galerija.ime}}</a>
+              </div>
+
+              <div class="down">
+                <button class="btn btn-danger" ng-click="odstrani_galerijo(galerija.ime,$index)">izbriši galerijo</button>
+              </div>
+            </div>
+          </div>          
+        </div>
+      </div>
+      <div class="col-xs-2"></div>
+    </div>
+  </script>
+  <!--galerije.html -->
+
+  <!--prikazslik.html -->
+  <script type="text/ng-template" id="/prikazslik.html">
+    
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <a class="navbar-brand" style="color:white;">Galerija</a>
+        <ul class="nav navbar-nav">
+          <li class="active" ng-show="logged_in">
+            <a href="/#!/galerije">Domov</a>
+          </li>
+          <li ng-show="logged_in">
+            <a ng-click="logoutFunkcija()">logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+
+    <div class="row">
+      <div class="col-xs-2"></div>
+      <div class="col-xs-8">        
+
+        <h1 align="center">Slike v galeriji {{ime_galerije}}</h1><br>
+          <div class="row">
+
+            <div ng-show="logged_in" class="col-xs-6 col-md-4 container fill" >
+              <h3 align="center">Naloži novo sliko</h3>
+              <form method="post" enctype="multipart/form-data" action="{{'/shrani_sliko_v_galerijo/'+ime_galerije+'/'+opis_nove}}">
+                <label class="btn btn-unique btn-block" for="my-file-selector">
+                  <input name="upl" id="my-file-selector" type="file" style="display:none" onchange="$('#upload-file-info').html(this.files[0].name)"
+                    required> Izberi sliko
+                </label>
+                <input class="form-control" type="text" ng-model="opis_nove" placeholder="opis slike" required />
+                <input type="submit" class="form-control"/>
+              </form>
+            </div>
+
+            <div class="col-xs-6 col-md-4 container fill" ng-repeat="x in slike_galerije track by $index">
+                <p style="text-align:center">                  
+                  <img ng-src="{{x}}" ng-click="odpri_vecjo_sliko(x,$index)" class="image fill" style="max-height:30vh;min-height:30vh;min-width:30vw;"></img>         
+                </p>
+                
+                <div class="middle">
+                   <button class="btn btn-unique" ng-click="odpri_vecjo_sliko(x,$index)" style="float:right;">Prikaži večjo</button>
+                </div>
+                <div class="down" ng-show="logged_in">
+                   <button class="btn btn-danger" style="float:right;" ng-click="zbrisi_sliko(ime_galerije, x, $index)">izbriši sliko</button>
+                </div>            
+
+                <!--MODAL WINDOW--> 
+                <script type="text/ng-template" id="/myModalContent.html">
+                  <img ng-src="{{povecana_slika}}" style="height:80vh;width:80vw;" class="center"></img>
+                  <h3>{{opis_povecana_slika}}</h3>
+                </script>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-2"></div>
+    </div>
+
+  </script>
+  <!--prikazslik.html -->
+
+</body>
+</html>
