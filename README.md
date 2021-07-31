@@ -1,7 +1,4 @@
 # oogallery
-galerija pri predmetu osnove oblikovanja
-
-
 
 -start mongodb<br>
 -npm install<br>
